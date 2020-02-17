@@ -22,7 +22,7 @@
         >
         <label for="password">Пароль</label>
         <small class="helper-text invalid" v-if="$v.password.$dirty && !$v.password.required">Введите Пароль</small>
-        <small class="helper-text invalid" v-else-if="$v.password.$dirty && !$v.password.minLength">Длинна Пароля должна быть не менее 6 символов</small>
+        <small class="helper-text invalid" v-else-if="$v.password.$dirty && !$v.password.minLength">Пароль должен быть {{ $v.password.$params.minLength.min }} символов </small>
       </div>
     </div>
     <div class="card-action">
@@ -47,6 +47,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { email, required, minLength } from 'vuelidate/lib/validators'
+import messages from '@/utils/messages'
 export default {
   name: 'Login',
   data: () => ({
@@ -57,13 +58,25 @@ export default {
     email: { email, required },
     password: { required, minLength: minLength(6) }
   },
+  mounted () {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message])
+    }
+  },
   methods: {
-    submitHandler () {
+    async submitHandler () {
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
       }
-      this.$router.push('/')
+      const formData = {
+        email: this.email,
+        password: this.password
+      }
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
+      } catch (e) {}
     }
   }
 }
