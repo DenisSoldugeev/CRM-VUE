@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import messages from '@/utils/messages'
+import message from '../utils/messages'
 
 export default {
   name: 'EmptyLayout',
@@ -16,7 +16,7 @@ export default {
   },
   watch: {
     error (fbError) {
-      this.$error(messages[fbError.code] || 'Что-то пошло не так')
+      this.$error(message[fbError.code] || 'Что-то пошло не так')
     }
   }
 }
