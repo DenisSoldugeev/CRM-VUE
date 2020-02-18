@@ -10,9 +10,7 @@ export default {
         throw e
       }
     },
-    // eslint-disable-next-line no-empty-pattern
     async register ({ dispatch, commit }, { email, password, name }) {
-      // eslint-disable-next-line no-useless-catch
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUid')
@@ -29,8 +27,9 @@ export default {
       const user = firebase.auth().currentUser
       return user ? user.uid : null
     },
-    async logout () {
+    async logout ({ commit }) {
       await firebase.auth().signOut()
+      commit('clearInfo')
     }
   }
 }
