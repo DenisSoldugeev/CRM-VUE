@@ -2,10 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth'
 import info from './info'
+import category from './category'
+import createLogger from 'vuex/dist/logger'
+
+const loggerMiddleware = createLogger({
+  collapsed: false
+})
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [loggerMiddleware],
   state: {
     error: null
   },
@@ -29,6 +36,7 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
-    info
+    info,
+    category
   }
 })
