@@ -24,7 +24,13 @@
 
 <script>
 export default {
-  name: 'Planning'
+  name: 'Planning',
+  data: () => ({
+    loading: true,
+    categories: []
+  }),
+  async mounted () {
+  }
 }
 </script>
 
