@@ -39,9 +39,7 @@ export default {
     ...mapGetters(['info'])
   },
   async mounted () {
-    // eslint-disable-next-line no-unused-vars
     const records = await this.$store.dispatch('fetchRecords')
-    // eslint-disable-next-line no-unused-vars
     const categories = await this.$store.dispatch('fetchCategories')
     this.categories = categories.map(cat => {
       const spend = records
